@@ -1,6 +1,6 @@
-system/data/raw/
-system/saved_models/
-system/experiments/results/
+svm/data/raw/
+svm/saved_models/
+svm/experiments/results/
 web/model/
 venv/
 env/
