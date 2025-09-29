@@ -1,0 +1,9 @@
+numpy
+scikit-learn
+scikit-image
+joblib
+opencv-python
+imgaug
+matplotlib
+seaborn
+tqdm
