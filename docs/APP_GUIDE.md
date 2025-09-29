@@ -95,7 +95,7 @@ Aktifkan lingkungan virtual:
 ### 4. Instal Dependensi
 
 ```bash
-pip install -r web/requirements.txt
+pip install -r requirements.txt
 ```
 
 ---

@@ -54,13 +54,13 @@ Library utama:
 1. Pastikan dataset tersedia di:
 
    ```
-   system/data/raw/
+   svm/data/raw/
    ```
 
 2. Buka terminal, masuk ke folder `svm/`:
 
    ```bash
-   cd system
+   cd svm
    ```
 
 3. Jalankan pipeline training:
