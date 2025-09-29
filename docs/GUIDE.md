@@ -16,7 +16,7 @@ Instruksi langkah demi langkah untuk menyiapkan lingkungan, melatih model dari a
 
 ```bash
 git clone https://github.com/secessuss/klasifikasi-cuaca-svm.git
-cd klasifikasi-cuaca-svm/system
+cd klasifikasi-cuaca-svm/svm
 ```
 
 #### 2. Buat Lingkungan Virtual (Direkomendasikan)
@@ -57,7 +57,7 @@ Library utama:
    system/data/raw/
    ```
 
-2. Buka terminal, masuk ke folder `system/`:
+2. Buka terminal, masuk ke folder `svm/`:
 
    ```bash
    cd system
@@ -71,9 +71,9 @@ Library utama:
 
 Setelah selesai, tiga output utama akan tersimpan:
 
-* **Model** → `system/saved_models/svm_model.pkl`
-* **Laporan klasifikasi** → `system/experiments/results/classification_report.txt`
-* **Confusion matrix** → `system/experiments/results/confusion_matrix.png`
+* **Model** → `svm/saved_models/svm_model.pkl`
+* **Laporan klasifikasi** → `svm/experiments/results/classification_report.txt`
+* **Confusion matrix** → `svm/experiments/results/confusion_matrix.png`
 
 ---
 
@@ -82,7 +82,7 @@ Setelah selesai, tiga output utama akan tersimpan:
 1. Letakkan gambar baru ke folder:
 
    ```
-   system/data/new_images/
+   svm/data/new_images/
    ```
 
 2. Jalankan skrip prediksi:
