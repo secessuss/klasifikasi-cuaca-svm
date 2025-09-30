@@ -1,7 +1,7 @@
 # Klasifikasi Cuaca Melalui Gambar
 
 Proyek ini membangun pipeline machine learning untuk **klasifikasi kondisi cuaca** (Cloudy, Rain, Shine, Sunrise) menggunakan **ekstraksi fitur klasik (HOG, LBP, Color Histogram) + PCA + SVM**.
-Hasil akhirnya: model mencapai **95.4% akurasi** pada data uji
+Hasil akhirnya: model mencapai **96.4% akurasi** pada data uji
 
 ---
 
