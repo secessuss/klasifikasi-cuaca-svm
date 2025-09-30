@@ -1,6 +1,6 @@
-# Panduan Aplikasi Web
+# Panduan Deploy Aplikasi Web
 
-Aplikasi web ini menyediakan antarmuka pengguna sederhana untuk **mengunggah gambar cuaca** dan mendapatkan prediksi dari model machine learning.
+Panduan ini ditujukan untuk **men-deploy aplikasi web** yang menyediakan antarmuka pengguna sederhana untuk **mengunggah gambar cuaca** dan mendapatkan prediksi dari model machine learning.
 
 ---
 
@@ -53,7 +53,7 @@ web/
 
 ---
 
-## Panduan Instalasi & Menjalankan
+## Panduan Instalasi & Deploy
 
 ### 1. Clone Repositori (Jika belum)
 
@@ -100,7 +100,7 @@ pip install -r requirements.txt
 
 ---
 
-### 5. Jalankan Aplikasi
+### 5. Jalankan Aplikasi (Local Deploy)
 
 ```bash
 python app.py

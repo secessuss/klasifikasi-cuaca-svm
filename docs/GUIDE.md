@@ -16,7 +16,7 @@ Instruksi langkah demi langkah untuk menyiapkan lingkungan, melatih model dari a
 
 ```bash
 git clone https://github.com/secessuss/klasifikasi-cuaca-svm.git
-cd klasifikasi-cuaca-svm/svm
+cd klasifikasi-cuaca-svm
 ```
 
 #### 2. Buat Lingkungan Virtual (Direkomendasikan)
@@ -37,6 +37,8 @@ Aktifkan lingkungan virtual:
   ```bash
   source venv/bin/activate
   ```
+
+> **Catatan**: Lingkungan virtual ini digunakan untuk **seluruh project**, mencakup proses **training model** di folder `svm/` maupun **menjalankan aplikasi web** di folder `web/`.
 
 #### 3. Instal Dependensi
 
