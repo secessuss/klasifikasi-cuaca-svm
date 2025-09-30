@@ -1,5 +1,3 @@
-# Fungsi untuk ekstraksi fitur HOG, Color Histogram, dan LBP
-
 import numpy as np
 import cv2
 from skimage.feature import hog, local_binary_pattern
@@ -28,8 +26,7 @@ def extract_color_histogram(color_image):
     """
     # Konversi gambar dari BGR ke HSV
     hsv_image = cv2.cvtColor((color_image * 255).astype(np.uint8), cv2.COLOR_BGR2HSV)
-
-    # Mengurangi jumlah bins untuk S dan V agar lebih robust
+    
     # Menghitung histogram untuk setiap channel
     hist_h = cv2.calcHist([hsv_image], [0], None, [180], [0, 180]) # Hue
     hist_s = cv2.calcHist([hsv_image], [1], None, [32], [0, 256])  # Saturation (32 bins)

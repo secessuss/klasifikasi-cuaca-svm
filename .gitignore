@@ -1,6 +1,7 @@
 svm/data/raw/
+svm/data/processed/
 svm/saved_models/
-svm/experiments/results/
+svm/experiments/logs/
 web/model/
 venv/
 env/

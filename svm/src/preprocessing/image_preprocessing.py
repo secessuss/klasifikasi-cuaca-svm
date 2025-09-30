@@ -1,5 +1,3 @@
-# Fungsi-fungsi untuk prapemrosesan gambar
-
 import cv2
 import numpy as np
 from src.config import IMAGE_SIZE
@@ -19,23 +17,22 @@ def to_grayscale(image):
 def normalize_image(image):
     """
     Normalisasi nilai piksel gambar ke rentang [0, 1].
-    Gambar harus dalam format float.
     """
     return image.astype('float32') / 255.0
 
 def preprocess_image_for_feature_extraction(image):
     """
     Pipeline prapemrosesan lengkap untuk satu gambar.
-    Menghasilkan gambar grayscale yang dinormalisasi dan gambar berwarna yang dinormalisasi.
     """
     # Resize gambar asli (berwarna)
-    resized_color = resize_image(image)
+    resized_color_uint8 = resize_image(image)
     
     # Konversi ke grayscale
-    gray_image = to_grayscale(resized_color)
+    gray_image = to_grayscale(resized_color_uint8)
     
-    # Normalisasi keduanya
+    # Normalisasi keduanya untuk ekstraksi fitur
     normalized_gray = normalize_image(gray_image)
-    normalized_color = normalize_image(resized_color)
+    normalized_color = normalize_image(resized_color_uint8)
     
-    return normalized_gray, normalized_color
+    # Kembalikan versi uint8 juga untuk disimpan
+    return normalized_gray, normalized_color, resized_color_uint8

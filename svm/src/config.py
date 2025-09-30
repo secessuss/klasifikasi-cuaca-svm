@@ -1,12 +1,15 @@
-# File untuk menyimpan semua parameter dan konfigurasi global
-
 import os
 
 # PATH
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DATA_RAW_PATH = os.path.join(BASE_DIR, '../svm/data/raw') # Sesuaikan nama folder dataset jika berbeda
-SAVED_MODEL_PATH = os.path.join(BASE_DIR, '../svm/saved_models/svm_model.pkl')
-RESULTS_PATH = os.path.join(BASE_DIR, '../svm/experiments/results')
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+SVM_DIR = os.path.join(BASE_DIR, 'svm')
+DATA_RAW_PATH = os.path.join(SVM_DIR, 'data', 'raw')
+DATA_PROCESSED_PATH = os.path.join(SVM_DIR, 'data', 'processed')
+DATA_OUTLIERS_PATH = os.path.join(SVM_DIR, 'data', 'outliers')
+SAVED_MODEL_PATH = os.path.join(SVM_DIR, 'saved_models', 'svm_model.pkl')
+LOGS_PATH = os.path.join(SVM_DIR, 'experiments', 'logs')
+RESULTS_PATH = os.path.join(SVM_DIR, 'experiments', 'results')
+
 
 # IMAGE PREPROCESSING
 IMAGE_SIZE = (128, 128) # Ukuran gambar (lebar, tinggi)
