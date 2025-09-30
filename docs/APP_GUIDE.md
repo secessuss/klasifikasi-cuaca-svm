@@ -69,6 +69,15 @@ cd klasifikasi-cuaca-svm/web
 * Python 3.9 atau lebih baru
 * File model `svm_model.pkl` tersedia di folder `web/model/`
 
+> Jika Anda tidak ingin melakukan training dari awal, gunakan model terlatih yang sudah tersedia di sini:
+> [📥 Unduh Model Terlatih (svm_model.pkl)](https://github.com/secessuss/klasifikasi-cuaca-svm/releases)
+
+Setelah diunduh, letakkan file `svm_model.pkl` ke folder:
+
+```
+web/model/
+```
+
 ---
 
 ### 3. Buat Lingkungan Virtual
