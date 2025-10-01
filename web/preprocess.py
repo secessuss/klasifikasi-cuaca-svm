@@ -1,3 +1,4 @@
+'''
 import cv2
 import numpy as np
 from skimage.feature import hog, local_binary_pattern
@@ -78,3 +79,4 @@ def preprocess_image_for_prediction(image_np):
     combined_features = np.hstack([hog_features, color_hist_features, lbp_features])
     
     return combined_features
+'''

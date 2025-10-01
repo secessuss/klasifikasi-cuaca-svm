@@ -1,10 +1,12 @@
 import os
 import joblib
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, session
 from werkzeug.utils import secure_filename
 import numpy as np
 from PIL import Image
-from preprocess import preprocess_image_for_prediction
+
+from model_wrapper import IntegratedClassifier
+
 
 # Inisialisasi Aplikasi Flask
 app = Flask(__name__)
@@ -15,13 +17,12 @@ if not os.path.exists(app.config['UPLOAD_FOLDER']):
     os.makedirs(app.config['UPLOAD_FOLDER'])
 
 # Muat Model
-# Menggunakan joblib karena model scikit-learn disimpan dengannya
 try:
-    model_path = 'model/svm_model.pkl'
+    model_path = 'model/svm_model_integrated.pkl'
     model = joblib.load(model_path)
-    print(f"* Model berhasil dimuat dari {model_path}")
+    print(f"* Model terintegrasi berhasil dimuat dari {model_path}")
 except FileNotFoundError:
-    print(f"* Peringatan: File model tidak ditemukan di {model_path}. Aplikasi mungkin gagal saat prediksi.")
+    print(f"* Peringatan: File model tidak ditemukan di {model_path}. Aplikasi akan gagal saat prediksi.")
     model = None
 except Exception as e:
     print(f"* Terjadi kesalahan saat memuat model: {e}")
@@ -59,40 +60,58 @@ def predict():
         return redirect(url_for('index'))
 
     if file and allowed_file(file.filename):
+        # Cek apakah ada file dari sesi sebelumnya dan hapus
+        last_filepath = session.get('last_filepath')
+        if last_filepath and os.path.exists(last_filepath):
+            try:
+                os.remove(last_filepath)
+                print(f"* File lama '{last_filepath}' telah dihapus.")
+            except Exception as e:
+                print(f"* Gagal menghapus file lama: {e}")
+
         filename = secure_filename(file.filename)
         filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         file.save(filepath)
 
+        # Simpan path file yang baru ke dalam sesi
+        session['last_filepath'] = filepath
+
         try:
-            # Buka gambar menggunakan Pillow
-            image = Image.open(filepath)
-            # Konversi ke array numpy
+            # Buka gambar menggunakan Pillow dan konversi ke array numpy
+            image = Image.open(filepath).convert('RGB') # formatnya RGB
             image_np = np.array(image)
 
-            # Lakukan pra-pemrosesan
-            features = preprocess_image_for_prediction(image_np)
-            
-            # Lakukan prediksi
+            # Lakukan prediksi langsung pada gambar mentah
             if model:
-                prediction_idx = model.predict([features])[0]
+                # Model menerima list dari gambar, bungkus dengan []
+                prediction_idx = model.predict([image_np])[0]
                 prediction_class = CLASSES[prediction_idx]
                 
                 # Dapatkan skor kepercayaan (probabilitas)
-                confidence_scores = model.predict_proba([features])[0]
+                confidence_scores = model.predict_proba([image_np])[0]
                 confidence = round(confidence_scores[prediction_idx] * 100, 2)
+                
+                all_scores = list(zip(CLASSES, confidence_scores))
+                all_confidences = sorted(
+                    [(name, round(score * 100, 2)) for name, score in all_scores],
+                    key=lambda item: item[1],
+                    reverse=True
+                )
+
             else:
                 flash("Model tidak dapat dimuat. Prediksi tidak tersedia.")
                 return redirect(url_for('index'))
-
-
+            
             return render_template('result.html', 
                                    filename=filename, 
                                    prediction=prediction_class, 
-                                   confidence=confidence)
+                                   confidence=confidence,
+                                   all_confidences=all_confidences)
 
         except Exception as e:
             flash(f'Terjadi kesalahan saat memproses gambar: {e}')
             return redirect(url_for('index'))
+
     else:
         flash('Jenis file yang diizinkan adalah png, jpg, jpeg')
         return redirect(url_for('index'))
