@@ -27,7 +27,7 @@ Model mencapai **akurasi 95.88%** pada data uji.
 ---
 
 ## Confusion Matrix
-[Confusion Matrix](svm/experiments/results/confusion_matrix.png)
+![Confusion Matrix](svm/experiments/results/confusion_matrix.png)
 
 ---
 
