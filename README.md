@@ -118,6 +118,8 @@ Buka `svm/notebooks/prediction.ipynb` dan jalankan setelah menyesuaikan nama fil
 
 - **Unduh Model:** [Release](https://github.com/secessuss/klasifikasi-cuaca-svm/releases)
 
+---
+
 ## Langkah-langkah Menjalankan
 
 ### Pindah ke folder aplikasi (web)
