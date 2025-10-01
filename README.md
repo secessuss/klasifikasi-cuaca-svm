@@ -8,6 +8,7 @@ Model untuk mengklasifikasikan gambar ke dalam empat kategori cuaca:
 - **Matahari Terbit (Sunrise)**
 
 **Sumber Dataset:** [Kaggle](https://www.kaggle.com/datasets/pratik2901/multiclass-weather-dataset)
+
 Model mencapai **akurasi 95.88%** pada data uji.
 
 ---
