@@ -1,6 +1,6 @@
 # Hasil Akhir
 
-Hasil kuantitatif dari **model klasifikasi cuaca**, dievaluasi pada **899 gambar uji**.
+Hasil kuantitatif dari **model klasifikasi cuaca**, dievaluasi pada **225 gambar uji**.
 
 ---
 
@@ -10,11 +10,11 @@ Model optimal (**Data Augmentation + PCA + SVM**) mencapai performa tinggi dan s
 
 | Metrik                                | Nilai   |
 |---------------------------------------|---------|
-| **Akurasi Keseluruhan (Data Uji)**    | 95.88%  |
-| **Skor F1 Rata-rata (Macro Avg)**     | 0.96    |
-| **Skor F1 Rata-rata (Weighted Avg)**  | 0.96    |
+| **Akurasi Keseluruhan (Data Uji)**    | 85.33%  |
+| **Skor F1 Rata-rata (Macro Avg)**     | 0.84    |
+| **Skor F1 Rata-rata (Weighted Avg)**  | 0.85    |
 | **Parameter Terbaik (C, γ)**          | (1, 0.01) |
-| **Skor Validasi Silang (CV)**         | 93.24%  |
+| **Skor Validasi Silang (CV)**         | 81.90%  |
 
 ---
 
@@ -22,29 +22,29 @@ Model optimal (**Data Augmentation + PCA + SVM**) mencapai performa tinggi dan s
 
 | Kelas    | Precision | Recall | F1-Score | Support |
 |----------|-----------|--------|----------|---------|
-| Cloudy   | 0.95      | 0.97   | 0.96     | 240     |
-| Rain     | 0.94      | 0.98   | 0.96     | 171     |
-| Shine    | 0.96      | 0.92   | 0.94     | 202     |
-| Sunrise  | 0.98      | 0.97   | 0.97     | 286     |
-| **Total / Accuracy** | — | — | **0.96** | **899** |
-| **Macro Avg** | 0.96 | 0.96 | 0.96 | 899 |
-| **Weighted Avg** | 0.96 | 0.96 | 0.96 | 899 |
+| Cloudy   | 0.84      | 0.90   | 0.87     | 60      |
+| Rain     | 0.74      | 0.98   | 0.84     | 43      |
+| Shine    | 0.87      | 0.66   | 0.75     | 50      |
+| Sunrise  | 0.95      | 0.88   | 0.91     | 72      |
+| **Total / Accuracy** | — | — | **0.85** | **225** |
+| **Macro Avg** | 0.85 | 0.85 | 0.84 | 225 |
+| **Weighted Avg** | 0.86 | 0.85 | 0.85 | 225 |
 
 ---
 
 ## Analisis
 
-- **Precision Tinggi** → Prediksi yang benar sangat konsisten (misalnya, *Sunrise* dengan precision 98%).  
-- **Recall Tinggi** → Sebagian besar sampel benar terklasifikasi (misalnya, *Rain* dengan recall 98%).  
-- **F1-Score Seimbang** → Skor konsisten antar kelas, tidak ada bias signifikan.  
+- **Recall Tinggi untuk Hujan (Rain)** → Model sangat baik dalam mengidentifikasi semua kasus hujan **(98%)**, meskipun presisinya lebih rendah. 
+- **Precision Rendah untuk Hujan (Rain)** → Terdapat beberapa kasus di mana model memprediksi Hujan, padahal sebenarnya bukan.
+- **Tantangan pada Kelas Cerah (Shine)** → Recall untuk kelas Shine **(66%)** adalah yang terendah, menunjukkan model kesulitan mengidentifikasi beberapa gambar cerah dengan benar.
+- **Performa Kuat pada Matahari Terbit (Sunrise)** → Kelas ini memiliki F1-Score tertinggi **(0.91)**, menunjukkan keseimbangan yang baik antara presisi dan recall.
 
 ---
 
 ## Confusion Matrix
 
-- **Diagonal Dominan** → Mayoritas prediksi tepat.  
-- **Kesalahan Kecil** → Hanya beberapa kasus *Cloudy* salah diklasifikasikan.  
-- **Tidak Ada Kebingungan Sistematis** → Tidak ada pasangan kelas yang selalu tertukar.  
+- **Diagonal Dominan** → Sebagian besar prediksi masih tepat sasaran.
+- **Potensi Kebingungan** → Perlu dianalisis lebih lanjut pada matriks kebingungan untuk melihat kelas mana yang sering tertukar, terutama untuk kelas *Shine*.
 
 ---
 
@@ -55,7 +55,8 @@ Walaupun performa sangat tinggi, kesalahan kecil tetap ada, terutama pada kasus 
 - **Matahari terbit dengan awan tipis** → bisa mirip dengan kelas *Cloudy*.  
 
 **Peluang perbaikan:**  
-- Menambahkan lebih banyak data pada kasus-kasus ambigu.  
-- Menggunakan teknik ekstraksi fitur yang lebih canggih (misalnya CNN-based).  
+- Menambahkan lebih banyak data pada kelas dengan performa rendah seperti Shine.
+- Melakukan analisis error untuk memahami mengapa gambar Shine sering salah diklasifikasikan.
+- Eksperimen lebih lanjut dengan teknik augmentasi atau ekstraksi fitur yang berbeda.
 
 ---

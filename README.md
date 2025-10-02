@@ -9,7 +9,7 @@ Model untuk mengklasifikasikan gambar ke dalam empat kategori cuaca:
 
 **Sumber Dataset:** [Kaggle](https://www.kaggle.com/datasets/pratik2901/multiclass-weather-dataset)
 
-Model mencapai **akurasi 95.88%** pada data uji.
+Model mencapai **akurasi 85.33%** pada data uji.
 
 ---
 
@@ -17,13 +17,13 @@ Model mencapai **akurasi 95.88%** pada data uji.
 
 | Kelas    | Precision | Recall | F1-Score | Support |
 |----------|-----------|--------|----------|---------|
-| Cloudy   | 0.95      | 0.97   | 0.96     | 240     |
-| Rain     | 0.94      | 0.98   | 0.96     | 171     |
-| Shine    | 0.96      | 0.92   | 0.94     | 202     |
-| Sunrise  | 0.98      | 0.97   | 0.97     | 286     |
-| **Total / Accuracy** | — | — | **0.96** | **899** |
-| **Macro Avg** | 0.96 | 0.96 | 0.96 | 899 |
-| **Weighted Avg** | 0.96 | 0.96 | 0.96 | 899 |
+| Cloudy   | 0.84      | 0.90   | 0.87     | 60      |
+| Rain     | 0.74      | 0.98   | 0.84     | 43      |
+| Shine    | 0.87      | 0.66   | 0.75     | 50      |
+| Sunrise  | 0.95      | 0.88   | 0.91     | 72      |
+| **Total / Accuracy** | — | — | **0.85** | **225** |
+| **Macro Avg** | 0.85 | 0.85 | 0.84 | 225 |
+| **Weighted Avg** | 0.86 | 0.85 | 0.85 | 225 |
 
 ---
 
@@ -38,8 +38,8 @@ Model mencapai **akurasi 95.88%** pada data uji.
 - **Ekstraksi Fitur:** Kombinasi HOG (bentuk), Color Histogram (warna), dan LBP (tekstur).
 - **Reduksi Dimensi:** PCA untuk mengatasi *curse of dimensionality* dan overfitting.
 - **Klasifikasi:** Support Vector Machine (SVM) dengan kernel RBF.
-- **Dataset:** Multi-class Weather Dataset dari Kaggle — 4 kelas, ~1125 gambar awal.
-- **Hasil Akhir:** Akurasi **95.88%** pada set data pengujian.
+- **Dataset:** Multi-class Weather Dataset dari Kaggle — 4 kelas, ~1123 gambar awal.
+- **Hasil Akhir:** Akurasi **85.33%** pada set data pengujian.
 
 ---
 
@@ -94,13 +94,13 @@ Buka `svm/notebooks/prediction.ipynb` dan jalankan setelah menyesuaikan nama fil
 # Tampilan Demo Web
 
 ## Form Upload Klasifikasi Cuaca
-![Form Upload Klasifikasi Cuaca](docs/images/demo-home.png)
+![Form Upload Klasifikasi Cuaca](docs/images/new-demo-home.png)
 
 ## Halaman Hasil Prediksi
-![Hasil Prediksi Klasifikasi Cuaca](docs/images/demo-result.png)
+![Hasil Prediksi Klasifikasi Cuaca](docs/images/new-demo-result.png)
 
 ## Halaman Hasil Pelatihan
-![Hasil Pelatihan Model](docs/images/demo-visualization.png)
+![Hasil Pelatihan Model](docs/images/new-demo-visualization.png)
 
 ---
 

@@ -9,6 +9,7 @@ from src.utils.logger import logger
 def augment_image(image):
     """
     Menerapkan augmentasi sederhana pada sebuah gambar.
+    Fungsi ini mengembalikan list yang berisi gambar asli dan versi augmentasinya.
     """
     augmented_images = [image]
 
@@ -24,15 +25,15 @@ def augment_image(image):
 
     return augmented_images
 
-def load_images_from_folder(folder_path, use_augmentation=True):
+def load_images_from_folder(folder_path):
     """
-    Memuat semua gambar dan labelnya, serta memindahkan file yang korup.
+    Memuat semua gambar dan labelnya dari folder, serta memindahkan file yang korup.
     """
     images = []
     labels = []
     filenames = []
     
-    logger.info(f"Memuat gambar dari '{folder_path}'...")
+    logger.info(f"Memuat gambar asli dari '{folder_path}'...")
     
     if not os.path.isdir(folder_path):
         logger.error(f"Direktori dataset tidak ditemukan di: {folder_path}")
@@ -49,16 +50,9 @@ def load_images_from_folder(folder_path, use_augmentation=True):
             try:
                 img = cv2.imread(img_path)
                 if img is not None:
-                    if use_augmentation:
-                        augmented = augment_image(img)
-                        for aug_img in augmented:
-                            images.append(aug_img)
-                            labels.append(class_label)
-                            filenames.append(filename) # Simpan nama file asli
-                    else:
-                        images.append(img)
-                        labels.append(class_label)
-                        filenames.append(filename)
+                    images.append(img)
+                    labels.append(class_label)
+                    filenames.append(filename)
                 else:
                     destination_path = os.path.join(DATA_OUTLIERS_PATH, filename)
                     shutil.move(img_path, destination_path)
@@ -66,6 +60,5 @@ def load_images_from_folder(folder_path, use_augmentation=True):
             except Exception as e:
                 logger.error(f"Error saat memproses gambar {img_path}: {e}")
                 
-    logger.info(f"Total gambar yang berhasil dimuat (termasuk augmentasi): {len(images)}")
+    logger.info(f"Total gambar asli yang berhasil dimuat: {len(images)}")
     return images, labels, filenames
-

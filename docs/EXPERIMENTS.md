@@ -32,7 +32,7 @@ Dokumen ini membandingkan dua pendekatan eksperimental:
 
 ### Desain Eksperimen
 - **Data Augmentation:**  
-  Jumlah data latih ditingkatkan dari ~898 → **3593 gambar** (horizontal flip & perubahan kecerahan).  
+  Jumlah data latih ditingkatkan dari ~898 → **3592 gambar** (horizontal flip & perubahan kecerahan).  
   → Membantu generalisasi model.  
 
 - **Reduksi Dimensi (PCA):**  
@@ -49,15 +49,15 @@ Dokumen ini membandingkan dua pendekatan eksperimental:
   - `gamma`: [0.01, 0.001, 0.005, 0.0001]  
 - **Hasil terbaik:**  
   - **C = 1**, **gamma = 0.01**  
-  - **Skor validasi silang:** 93.24%  
+  - **Skor validasi silang:** 81.90%  
 
 ### Hasil Optimal
-- **Akurasi pada Data Uji:** **95.88%**  
+- **Akurasi pada Data Uji:** **85.33%**  
 
 ---
 
 ## Kesimpulan Eksperimen
-- Akurasi meningkat dari **42.2% → 95.9%** setelah optimisasi.  
+- Akurasi meningkat dari **42.2% → 85.33%** setelah optimisasi.  
 - **Data Augmentation** → membuat model lebih robust terhadap variasi data.  
 - **PCA** → langkah krusial untuk mengatasi *curse of dimensionality*.  
 - Pipeline yang **terstruktur & optimal** lebih penting daripada hanya memilih algoritma kuat.  

@@ -8,7 +8,7 @@ Merinci **sumber data, karakteristik, distribusi kelas, serta tahapan prapemrose
 
 - **Nama:** Multi-class Weather Dataset for Image Classification  
 - **Sumber:** [Kaggle](https://www.kaggle.com/datasets/pratik2901/multiclass-weather-dataset)
-- **Total Gambar Awal:** 1125 gambar berwarna  
+- **Total Gambar Awal:** 1123 gambar berwarna  
 - **Format:** Mayoritas `.jpg`  
 - **Jumlah Kelas:** 4 kategori cuaca  
   - **Cloudy (Berawan)**  
@@ -26,9 +26,9 @@ Jumlah gambar untuk setiap kelas tidak seimbang: *Sunrise* paling banyak, *Rain*
 |---------|---------------|
 | Sunrise | 357           |
 | Cloudy  | 300           |
-| Shine   | 253           |
-| Rain    | 215           |
-| **Total** | **1125**   |
+| Shine   | 252           |
+| Rain    | 214           |
+| **Total** | **1123**   |
 
 **Implikasi:**  
 Ketidakseimbangan kelas dapat membuat model bias.  
@@ -58,13 +58,13 @@ Ketidakseimbangan kelas dapat membuat model bias.
   - **Horizontal Flip** → variasi perspektif  
   - **Perubahan Kecerahan** → simulasi kondisi pencahayaan berbeda  
 - **Hasil:**  
-  - Data latih meningkat dari ~898 → **3593 sampel** setelah augmentasi.  
+  - Data latih meningkat dari ~898 → **3592 sampel** setelah augmentasi.  
 
 ---
 
 ### 3. Pembagian Data (*Train/Test Split*)
-- **Data Latih (80%)** → 3593 gambar (setelah augmentasi), digunakan untuk training & tuning.  
-- **Data Uji (20%)** → 899 gambar, digunakan untuk evaluasi akhir.  
+- **Data Latih (80%)** → 3592 gambar (setelah augmentasi), digunakan untuk training & tuning.  
+- **Data Uji (20%)** → 255 gambar, digunakan untuk evaluasi akhir.  
 - **Metode:** Stratified split → proporsi tiap kelas tetap konsisten.
 
 ---

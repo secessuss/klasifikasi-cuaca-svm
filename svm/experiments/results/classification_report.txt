@@ -1,13 +1,13 @@
-Akurasi Keseluruhan: 0.9588
+Akurasi Keseluruhan: 0.8533
 
 Laporan Klasifikasi:
               precision    recall  f1-score   support
 
-      Cloudy       0.95      0.97      0.96       240
-        Rain       0.94      0.98      0.96       171
-       Shine       0.96      0.92      0.94       202
-     Sunrise       0.98      0.97      0.97       286
+      Cloudy       0.84      0.90      0.87        60
+        Rain       0.74      0.98      0.84        43
+       Shine       0.87      0.66      0.75        50
+     Sunrise       0.95      0.88      0.91        72
 
-    accuracy                           0.96       899
-   macro avg       0.96      0.96      0.96       899
-weighted avg       0.96      0.96      0.96       899
+    accuracy                           0.85       225
+   macro avg       0.85      0.85      0.84       225
+weighted avg       0.86      0.85      0.85       225
