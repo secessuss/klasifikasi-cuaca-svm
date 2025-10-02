@@ -1,113 +1,167 @@
 /* Mendefinisikan Variabel Warna dan Font untuk Light & Dark Mode */
 :root {
     --bs-font-sans-serif: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-    --primary-color: #0d6efd;
-    --secondary-color: #6c757d;
-    --background-color: #f8f9fa;
+    --primary-color: #3b82f6;
+    --secondary-color: #6b7280;
+    --success-color: #10b981;
+    --warning-color: #f97316;
+    --danger-color: #ef4444;
+    --highlight-color: #14b8a6;
+    
+    --background-color: #f8fafc;
     --card-bg-color: #ffffff;
-    --highlight-color: #00bfa6;
-    --danger-color: #dc3545;
-    --text-color: #212529;
-    --text-muted-color: #6c757d;
-    --border-color: #dee2e6;
+    --text-color: #1f2937;
+    --text-muted-color: #6b7280;
+    --border-color: #e5e7eb;
+
+    --gradient-start: #e0f2fe;
+    --gradient-end: #f8fafc;
 }
 
 html[data-bs-theme="dark"] {
-    --primary-color: #3b82f6; /* Sedikit lebih cerah untuk kontras */
-    --secondary-color: #8f9ca8;
-    --background-color: #121212;
-    --card-bg-color: #1e1e1e;
-    --highlight-color: #14b8a6;
-    --text-color: #e5e7eb;
-    --text-muted-color: #9ca3af;
-    --border-color: #374151;
+    --primary-color: #60a5fa;
+    --secondary-color: #9ca3af;
+    --success-color: #34d399;
+    --warning-color: #fb923c;
+    --danger-color: #f87171;
+    --highlight-color: #2dd4bf;
+
+    --background-color: #0f172a;
+    --card-bg-color: #1e293b;
+    --text-color: #e2e8f0;
+    --text-muted-color: #94a3b8;
+    --border-color: #334155;
+
+    --gradient-start: #0f172a;
+    --gradient-end: #1e293b;
 }
 
 /* Transisi Halus untuk Perubahan Tema */
-body, .card, .navbar {
-    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+body, .card, .navbar, .form-control, .btn, .alert {
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, border-color 0.3s ease-in-out;
 }
 
 /* Styling Body Utama */
 body {
-    background-color: var(--background-color);
+    background-image: linear-gradient(to top, var(--gradient-start), var(--gradient-end) 150px);
     color: var(--text-color);
 }
 
 /* Styling Navbar */
 .navbar-brand {
-    font-weight: 600;
+    font-weight: 700;
 }
-
+.nav-link {
+    font-weight: 500;
+    color: var(--text-muted-color);
+}
 .nav-link.active {
     font-weight: 600;
+    color: var(--primary-color);
 }
 
 /* Styling Card */
 .card {
     border: 1px solid var(--border-color);
-    border-radius: 0.75rem; /* rounded-lg */
+    border-radius: 1rem; /* rounded-xl */
     background-color: var(--card-bg-color);
-    transition: box-shadow 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+.card .card-header, .card .card-footer {
+    background-color: transparent;
+    border-color: var(--border-color);
 }
 
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 .5rem 1.5rem rgba(0,0,0,.1);
-}
-
-html[data-bs-theme="dark"] .card:hover {
-     box-shadow: 0 .5rem 1.5rem rgba(0,0,0,.3);
-}
 
 /* Styling Tombol */
+.btn {
+    font-weight: 600;
+    border-radius: 0.5rem; /* rounded-md */
+    padding: 0.75rem 1.5rem;
+    transition: all 0.2s ease;
+}
 .btn-primary {
     background-color: var(--primary-color);
     border-color: var(--primary-color);
-    font-weight: 600;
-    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.1s ease;
 }
-
 .btn-primary:hover {
-    filter: brightness(90%);
+    background-color: #2563eb;
+    border-color: #2563eb;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+}
+html[data-bs-theme="dark"] .btn-primary:hover {
+     box-shadow: 0 4px 15px rgba(96, 165, 250, 0.2);
+}
+.btn-outline-primary {
+    color: var(--primary-color);
     border-color: var(--primary-color);
 }
-
-.btn-primary:active {
-    transform: scale(0.98);
-    filter: brightness(80%);
+.btn-outline-primary:hover {
+     background-color: var(--primary-color);
+     color: white;
 }
+
 
 /* Ikon Cuaca */
 .weather-icon {
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
 }
+.prediction-text {
+    color: var(--primary-color);
+}
+
 
 /* Progress Bar untuk Confidence */
 .progress, .progress-bar {
-    border-radius: 0.5rem;
+    border-radius: 0.75rem;
+}
+.progress-bar.bg-success { background-color: var(--success-color) !important; }
+.progress-bar.bg-warning { background-color: var(--warning-color) !important; }
+.progress-bar.bg-danger { background-color: var(--danger-color) !important; }
+#progress-bar-inner { background-color: var(--primary-color); }
+
+
+/* Styling Form Upload */
+.file-drop-area {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    border: 2px dashed var(--border-color);
+    border-radius: 1rem;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+.file-drop-area:hover, .file-drop-area.is-dragging {
+    border-color: var(--primary-color);
+    background-color: rgba(59, 130, 246, 0.05);
+}
+.file-drop-area.has-file {
+     border-color: var(--success-color);
+     background-color: rgba(16, 185, 129, 0.05);
+}
+.file-drop-text {
+    color: var(--text-muted-color);
+    margin: 0;
+}
+.file-input {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+#file-name-preview {
+    font-size: 0.9rem;
+    color: var(--success-color);
 }
 
-.progress-bar {
-    background-color: var(--highlight-color);
-}
-
-/* Spinner Kustom (opsional, jika ingin lebih unik dari default) */
-@keyframes spin {
-    to { transform: rotate(360deg); }
-}
-.spinner {
-    display: inline-block;
-    width: 50px;
-    height: 50px;
-    border: 3px solid rgba(0,0,0,.1);
-    border-radius: 50%;
-    border-top-color: var(--primary-color);
-    animation: spin 1s ease-in-out infinite;
-}
-
-/* Footer */
-footer {
-    background-color: transparent;
+/* Dark mode toggle */
+.form-check-label {
+    cursor: pointer;
 }

@@ -7,9 +7,9 @@
     <div class="col-lg-10 text-center">
         <h1 class="display-5 fw-bold mb-4">Hasil Prediksi</h1>
 
-        <div class="card text-start">
+        <div class="card text-start shadow-lg border-0">
             <div class="card-body p-4 p-md-5">
-                <div class="row align-items-center g-4">
+                <div class="row align-items-center g-4 g-lg-5">
                     <!-- Kolom Gambar -->
                     <div class="col-md-6">
                         <img src="{{ url_for('static', filename='uploads/' + filename) }}" alt="Uploaded Image" class="img-fluid rounded-3 shadow-sm w-100">
@@ -20,27 +20,36 @@
                             <p class="text-muted mb-2">Gambar Anda diprediksi sebagai:</p>
                             <div class="d-flex align-items-center justify-content-center justify-content-md-start gap-3 mb-4">
                                <img src="{{ url_for('static', filename='icons/' + prediction|lower + '.svg') }}" alt="{{ prediction }} icon" class="weather-icon">
-                               <h2 class="display-4 fw-bold mb-0">{{ prediction }}</h2>
+                               <h2 class="display-3 fw-bolder mb-0 prediction-text">{{ prediction }}</h2>
                             </div>
 
-                            <label for="confidence-bar" class="form-label">Tingkat Kepercayaan</label>
-                            <div class="progress" id="confidence-bar" role="progressbar" aria-label="Confidence score" aria-valuenow="{{ confidence }}" aria-valuemin="0" aria-valuemax="100" style="height: 2rem;">
-                                <div id="progress-bar-inner" class="progress-bar progress-bar-striped progress-bar-animated fw-bold" data-confidence="{{ confidence }}">
+                            <label for="confidence-bar" class="form-label fw-medium">Tingkat Kepercayaan</label>
+                            <div class="progress" id="confidence-bar" role="progressbar" aria-label="Confidence score" aria-valuenow="{{ confidence }}" aria-valuemin="0" aria-valuemax="100" style="height: 2.25rem;">
+                                <div id="progress-bar-inner" class="progress-bar progress-bar-striped progress-bar-animated fw-bold fs-5" data-confidence="{{ confidence }}">
                                     {{ confidence }}%
                                 </div>
                             </div>
                             
-                            <!-- Bagian untuk menampilkan semua probabilitas -->
-                            <div class="mt-4">
-                                <h5 class="fw-normal">Detail Probabilitas:</h5>
-                                <ul class="list-group list-group-flush">
+                            <hr class="my-4">
+
+                            <!-- Tampilan Detail Probabilitas -->
+                            <div class="probability-details">
+                                <h5 class="fw-medium mb-3">Detail Probabilitas Lainnya:</h5>
+                                <div class="d-flex flex-column gap-3">
                                     {% for class_name, class_confidence in all_confidences %}
-                                    <li class="list-group-item d-flex justify-content-between align-items-center px-0">
-                                        {{ class_name }}
-                                        <span class="badge {{ 'bg-primary' if class_name == prediction else 'bg-secondary' }} rounded-pill">{{ class_confidence }}%</span>
-                                    </li>
+                                        {% if class_name != prediction %}
+                                            <div>
+                                                <div class="d-flex justify-content-between mb-1">
+                                                    <span class="fw-medium">{{ class_name }}</span>
+                                                    <span class="text-muted">{{ class_confidence }}%</span>
+                                                </div>
+                                                <div class="progress" style="height: 8px;" role="progressbar" aria-label="{{ class_name }} probability" aria-valuenow="{{ class_confidence }}" aria-valuemin="0" aria-valuemax="100">
+                                                    <div class="progress-bar bg-secondary opacity-50 other-progress-bar" data-confidence="{{ class_confidence }}"></div>
+                                                </div>
+                                            </div>
+                                        {% endif %}
                                     {% endfor %}
-                                </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -48,14 +57,13 @@
             </div>
              <div class="card-footer bg-transparent border-0 p-4">
                 <div class="d-grid">
-                    <a href="{{ url_for('index') }}" class="btn btn-primary btn-lg">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-circle-fill me-2" viewBox="0 0 16 16"><path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/></svg>
+                    <a href="{{ url_for('index') }}" class="btn btn-outline-primary btn-lg">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left me-2" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/></svg>
                         Coba Gambar Lain
                     </a>
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 {% endblock %}
@@ -63,11 +71,28 @@
 {% block scripts %}
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        const progressBar = document.getElementById('progress-bar-inner');
-        const confidence = progressBar.getAttribute('data-confidence');
-        if (confidence) {
-            progressBar.style.width = confidence + '%';
+        // Logika untuk progress bar utama
+        const mainProgressBar = document.getElementById('progress-bar-inner');
+        const mainConfidence = parseFloat(mainProgressBar.getAttribute('data-confidence'));
+        if (mainConfidence) {
+            mainProgressBar.style.width = mainConfidence + '%';
+            if (mainConfidence > 85) {
+                mainProgressBar.classList.add('bg-success');
+            } else if (mainConfidence > 60) {
+                mainProgressBar.classList.add('bg-warning');
+            } else {
+                mainProgressBar.classList.add('bg-danger');
+            }
         }
+
+        // Logika untuk menangani progress bar lainnya
+        const otherProgressBars = document.querySelectorAll('.other-progress-bar');
+        otherProgressBars.forEach(bar => {
+            const confidenceValue = parseFloat(bar.getAttribute('data-confidence'));
+            if (confidenceValue) {
+                bar.style.width = confidenceValue + '%';
+            }
+        });
     });
 </script>
 {% endblock %}

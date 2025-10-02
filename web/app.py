@@ -19,6 +19,9 @@ if not os.path.exists(app.config['UPLOAD_FOLDER']):
 # Muat Model
 try:
     model_path = 'model/svm_model_integrated.pkl'
+    if not os.path.exists(model_path):
+        model_path = 'svm_model_integrated.pkl'
+
     model = joblib.load(model_path)
     print(f"* Model terintegrasi berhasil dimuat dari {model_path}")
 except FileNotFoundError:
@@ -46,6 +49,12 @@ def about():
     """Merender halaman tentang."""
     return render_template('about.html')
 
+@app.route('/visualization')
+def visualization():
+    """Merender halaman visualisasi performa model."""
+    return render_template('visualization.html')
+
+
 @app.route('/predict', methods=['POST'])
 def predict():
     """Menangani upload gambar dan melakukan prediksi."""
@@ -60,7 +69,7 @@ def predict():
         return redirect(url_for('index'))
 
     if file and allowed_file(file.filename):
-        # Cek apakah ada file dari sesi sebelumnya dan hapus
+        # Hapus file sebelumnya jika ada di sesi
         last_filepath = session.get('last_filepath')
         if last_filepath and os.path.exists(last_filepath):
             try:
@@ -78,10 +87,9 @@ def predict():
 
         try:
             # Buka gambar menggunakan Pillow dan konversi ke array numpy
-            image = Image.open(filepath).convert('RGB') # formatnya RGB
+            image = Image.open(filepath).convert('RGB')
             image_np = np.array(image)
 
-            # Lakukan prediksi langsung pada gambar mentah
             if model:
                 # Model menerima list dari gambar, bungkus dengan []
                 prediction_idx = model.predict([image_np])[0]
@@ -97,7 +105,6 @@ def predict():
                     key=lambda item: item[1],
                     reverse=True
                 )
-
             else:
                 flash("Model tidak dapat dimuat. Prediksi tidak tersedia.")
                 return redirect(url_for('index'))

@@ -6,13 +6,12 @@
 <div class="row justify-content-center">
     <div class="col-lg-8 text-center">
         <h1 class="display-4 fw-bold">Klasifikasi Cuaca</h1>
-        <p class="lead text-muted mb-4">Unggah gambar untuk memprediksi kondisi cuaca: Berawan, Hujan, Cerah, atau Matahari Terbit.</p>
+        <p class="lead text-muted mb-4">Unggah gambar untuk memprediksi kondisi cuaca secara instan: Berawan, Hujan, Cerah, atau Matahari Terbit.</p>
         
-        <!-- Flash Messages untuk notifikasi -->
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 {% for category, message in messages %}
-                <div class="alert alert-{{ category or 'warning' }} alert-dismissible fade show mt-4" role="alert">
+                <div class="alert alert-danger alert-dismissible fade show mt-4" role="alert">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-triangle-fill me-2" viewBox="0 0 16 16"><path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/></svg>
                     {{ message }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -21,18 +20,17 @@
             {% endif %}
         {% endwith %}
 
-        <!-- Card untuk Upload -->
-        <div id="upload-card" class="card mt-4">
+        <div id="upload-card" class="card mt-4 shadow-lg border-0">
             <div class="card-body p-4 p-md-5">
                 <form id="prediction-form" action="/predict" method="post" enctype="multipart/form-data">
-                    <div class="mb-3">
-                        <label for="file" class="form-label h5">Pilih File Gambar</label>
-                        <input class="form-control form-control-lg" type="file" id="file" name="file" accept="image/png, image/jpeg, image/jpg" required>
-                        <div id="file-name-preview" class="form-text mt-2">Belum ada file yang dipilih.</div>
+                    <div class="file-drop-area">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="bi bi-cloud-arrow-up-fill mb-3 text-primary" viewBox="0 0 16 16"><path d="M8 2a5.53 5.53 0 0 0-3.594 1.342c-.766.66-1.321 1.52-1.464 2.383C1.266 6.095 0 7.555 0 9.318 0 11.366 1.708 13 3.781 13h8.906C14.502 13 16 11.57 16 9.773c0-1.636-1.242-2.969-2.834-3.194C12.923 3.99 10.69 2 8 2zm2.354 5.146a.5.5 0 0 1-.708.708L8.5 6.707V10.5a.5.5 0 0 1-1 0V6.707L6.354 7.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2z"/></svg>
+                        <p class="file-drop-text"><strong>Seret & Lepas</strong> file gambar Anda di sini, atau klik untuk memilih file.</p>
+                        <input class="file-input" type="file" id="file" name="file" accept="image/png, image/jpeg, image/jpg" required>
+                        <div id="file-name-preview" class="form-text mt-2"></div>
                     </div>
-                    <div class="d-grid">
-                        <button type="submit" class="btn btn-primary btn-lg mt-3">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cloud-upload-fill me-2" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 0a5.53 5.53 0 0 0-3.594 1.342c-.766.66-1.321 1.52-1.464 2.383C1.266 4.095 0 5.555 0 7.318 0 9.366 1.708 11 3.781 11H7.5V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11h4.188C14.502 11 16 9.57 16 7.773c0-1.636-1.242-2.969-2.834-3.194C12.923 1.99 10.69 0 8 0zm-.5 14.5V11h1v3.5a.5.5 0 0 1-1 0z"/></svg>
+                    <div class="d-grid mt-4">
+                        <button type="submit" class="btn btn-primary btn-lg">
                             Prediksi Cuaca
                         </button>
                     </div>
@@ -40,14 +38,12 @@
             </div>
         </div>
         
-        <!-- Spinner Loading -->
         <div id="loading-spinner" class="text-center mt-5" style="display: none;">
             <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
                 <span class="visually-hidden">Loading...</span>
             </div>
             <p class="lead mt-3">Menganalisis gambar, mohon tunggu...</p>
         </div>
-
     </div>
 </div>
 {% endblock %}
@@ -57,22 +53,44 @@
     document.addEventListener('DOMContentLoaded', () => {
         const form = document.getElementById('prediction-form');
         const fileInput = document.getElementById('file');
+        const fileDropArea = document.querySelector('.file-drop-area');
         const fileNamePreview = document.getElementById('file-name-preview');
         const uploadCard = document.getElementById('upload-card');
         const loadingSpinner = document.getElementById('loading-spinner');
 
-        // Tampilkan nama file yang dipilih
-        fileInput.addEventListener('change', () => {
+        const updateFileName = () => {
             if (fileInput.files.length > 0) {
-                fileNamePreview.textContent = `File dipilih: ${fileInput.files[0].name}`;
+                fileNamePreview.innerHTML = `✓ File dipilih: <strong>${fileInput.files[0].name}</strong>`;
+                fileDropArea.classList.add('has-file');
             } else {
-                fileNamePreview.textContent = 'Belum ada file yang dipilih.';
+                fileNamePreview.textContent = '';
+                fileDropArea.classList.remove('has-file');
             }
+        };
+
+        fileInput.addEventListener('change', updateFileName);
+
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            fileDropArea.addEventListener(eventName, e => {
+                e.preventDefault();
+                e.stopPropagation();
+            }, false);
         });
 
-        // Tampilkan spinner saat form disubmit
+        ['dragenter', 'dragover'].forEach(eventName => {
+            fileDropArea.addEventListener(eventName, () => fileDropArea.classList.add('is-dragging'), false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            fileDropArea.addEventListener(eventName, () => fileDropArea.classList.remove('is-dragging'), false);
+        });
+
+        fileDropArea.addEventListener('drop', e => {
+            fileInput.files = e.dataTransfer.files;
+            updateFileName();
+        }, false);
+
         form.addEventListener('submit', () => {
-            // Cek validitas form sebelum menyembunyikan
             if(form.checkValidity()){
                 uploadCard.style.display = 'none';
                 loadingSpinner.style.display = 'block';

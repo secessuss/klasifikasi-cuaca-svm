@@ -10,31 +10,31 @@
             <p class="lead text-muted">Detail teknis di balik aplikasi klasifikasi cuaca.</p>
         </div>
         
-        <div class="card">
+        <div class="card shadow-sm border-0">
             <div class="card-body p-4 p-md-5">
                 <h4 class="card-title">Tujuan Proyek</h4>
-                <p>Proyek ini bertujuan untuk membuat aplikasi web yang dapat mengklasifikasikan gambar ke dalam empat kategori cuaca: Berawan (Cloudy), Hujan (Rain), Cerah (Shine), dan Matahari Terbit (Sunrise). Aplikasi ini merupakan implementasi dari model machine learning klasik yang telah dilatih sebelumnya.</p>
+                <p>Proyek ini bertujuan untuk membuat aplikasi web yang dapat mengklasifikasikan gambar ke dalam empat kategori cuaca: Berawan (Cloudy), Hujan (Rain), Cerah (Shine), dan Matahari Terbit (Sunrise). Aplikasi ini merupakan implementasi dari model machine learning yang telah dilatih sebelumnya.</p>
                 
                 <hr class="my-4">
                 
                 <h4 class="card-title">Dataset</h4>
-                <p>Model dilatih menggunakan dataset "Multi-class Weather Dataset" yang tersedia di Kaggle. Dataset ini berisi ribuan gambar yang sudah dikelompokkan ke dalam empat kelas cuaca yang disebutkan di atas.</p>
+                <p>Model dilatih menggunakan dataset <a href="https://www.kaggle.com/datasets/pratik2901/multiclass-weather-dataset" target="_blank" rel="noopener noreferrer">"Multi-class Weather Dataset"</a> yang tersedia di Kaggle. Dataset ini berisi ribuan gambar yang sudah dikelompokkan ke dalam empat kelas cuaca yang disebutkan di atas.</p>
 
                 <hr class="my-4">
 
                 <h4 class="card-title">Metodologi Machine Learning</h4>
-                <p>Proses pelatihan model menggunakan pendekatan machine learning klasik dengan langkah-langkah sebagai berikut:</p>
+                <p>Proses pelatihan model menggunakan pendekatan machine learning dengan langkah-langkah sebagai berikut:</p>
                 <ul>
                     <li><strong>Ekstraksi Fitur:</strong> Mengubah gambar menjadi data numerik menggunakan kombinasi metode HOG (Histogram of Oriented Gradients) untuk bentuk, Color Histogram untuk warna, dan LBP (Local Binary Patterns) untuk tekstur.</li>
                     <li><strong>Reduksi Dimensi:</strong> Menerapkan Principal Component Analysis (PCA) untuk mengurangi jumlah fitur, mengatasi overfitting, dan meningkatkan efisiensi model.</li>
                     <li><strong>Model Klasifikasi:</strong> Menggunakan algoritma <strong>Support Vector Machine (SVM)</strong> dengan kernel RBF yang telah dioptimalkan melalui hyperparameter tuning.</li>
-                    <li><strong>Hasil:</strong> Model akhir mencapai akurasi sekitar 95% pada data uji, menunjukkan kemampuan yang baik dalam membedakan keempat kelas cuaca.</li>
+                    <li><strong>Hasil:</strong> Model akhir mencapai akurasi sekitar 95.88% pada data uji, menunjukkan kemampuan yang sangat baik dalam membedakan keempat kelas cuaca.</li>
                 </ul>
 
                 <hr class="my-4">
 
                 <h4 class="card-title">Kredit</h4>
-                <p>Aplikasi ini dibuat sebagai bagian dari tugas kuliah untuk mendemonstrasikan penerapan machine learning dalam aplikasi dunia nyata.</p>
+                <p>Aplikasi ini dibuat sebagai bagian dari tugas kuliah untuk mendemonstrasikan penerapan machine learning dalam aplikasi</p>
             </div>
              <div class="card-footer text-center bg-transparent border-0 p-4">
                  <a href="{{ url_for('index') }}" class="btn btn-primary">

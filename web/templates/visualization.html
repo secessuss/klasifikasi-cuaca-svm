@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+
+{% block title %}Model Visualization - Klasifikasi Cuaca{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        <div class="text-center mb-5">
+            <h1 class="display-5 fw-bold">Performa Model</h1>
+            <p class="lead text-muted">Hasil Pelatihan</p>
+        </div>
+
+        <!-- Key Metrics Cards -->
+        <div class="row g-4 mb-5">
+            <div class="col-md-6">
+                <div class="card h-100 text-center shadow-sm border-0">
+                    <div class="card-body p-4">
+                        <h5 class="card-title text-muted">Best Cross-Validation Score</h5>
+                        <p class="card-text display-4 fw-bold text-primary">93.24%</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card h-100 text-center shadow-sm border-0">
+                    <div class="card-body p-4">
+                        <h5 class="card-title text-muted">Final Test Accuracy</h5>
+                        <p class="card-text display-4 fw-bold text-success">95.88%</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Classification Report Chart -->
+        <div class="card mb-4 shadow-sm border-0">
+            <div class="card-header bg-transparent py-3">
+                <h4 class="mb-0">Classification Report Metrics</h4>
+            </div>
+            <div class="card-body p-4">
+                <canvas id="classificationChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Confusion Matrix Display -->
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-transparent py-3">
+                <h4 class="mb-0">Confusion Matrix</h4>
+            </div>
+            <div class="card-body p-4 text-center">
+                <img src="{{ url_for('static', filename='images/confusion_matrix.png') }}" alt="Confusion Matrix" class="img-fluid rounded shadow-sm" style="max-width: 600px; height: auto;">
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const ctx = document.getElementById('classificationChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Cloudy', 'Rain', 'Shine', 'Sunrise'],
+                datasets: [{
+                    label: 'Precision',
+                    data: [0.95, 0.94, 0.96, 0.98],
+                    backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }, {
+                    label: 'Recall',
+                    data: [0.97, 0.98, 0.92, 0.97],
+                    backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }, {
+                    label: 'F1-Score',
+                    data: [0.96, 0.96, 0.94, 0.97],
+                    backgroundColor: 'rgba(255, 159, 64, 0.6)',
+                    borderColor: 'rgba(255, 159, 64, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        suggestedMax: 1.0,
+                        title: {
+                            display: true,
+                            text: 'Score'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed.y !== null) {
+                                    label += (context.parsed.y * 100).toFixed(0) + '%';
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>
+{% endblock %}

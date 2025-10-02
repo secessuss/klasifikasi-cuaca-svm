@@ -94,10 +94,13 @@ Buka `svm/notebooks/prediction.ipynb` dan jalankan setelah menyesuaikan nama fil
 # Tampilan Demo Web
 
 ## Form Upload Klasifikasi Cuaca
-![Form Upload Klasifikasi Cuaca](docs/images/demo1.png)
+![Form Upload Klasifikasi Cuaca](docs/images/demo-home.png)
 
 ## Halaman Hasil Prediksi
-![Hasil Prediksi Klasifikasi Cuaca](docs/images/demo2.png)
+![Hasil Prediksi Klasifikasi Cuaca](docs/images/demo-result.png)
+
+## Halaman Hasil Pelatihan
+![Hasil Pelatihan Model](docs/images/demo-visualization.png)
 
 ---
 
